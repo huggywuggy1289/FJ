@@ -1,5 +1,8 @@
-# FJ
-기말프로젝트 제출용 레포짓터리
+<h1>간단한 익명커뮤니티 구현 : TalkingWith, US.</h1>
+<p>
+  <br>
+
+### 👍🏻 팀원 
 <br>
 
 <table border="" cellspacing="0" cellpadding="0" width="50%">
