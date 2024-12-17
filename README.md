@@ -19,7 +19,7 @@
   <tr width="100%">
   <td  align="center">프론트+백</td>
   <td  align="center">프론트+백</td>
-  <td  align="center">V프론트+백</td>
+  <td  align="center">프론트+백</td>
      </tr>
       <tr width="100%">
           <td  align="center"><p>커뮤니티(CRUD)</p><p>익명처리</p><p>댓글기능</p><p>마이페이지</p></td>
