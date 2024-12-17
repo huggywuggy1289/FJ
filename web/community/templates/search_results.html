@@ -7,41 +7,73 @@
     <title>검색 결과</title>
     <link rel="stylesheet" href="{% static 'css/community.css' %}">
     <style>
+        /* 기본 레이아웃 */
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        h1 {
-            font-size: 2rem;
+            background-color: #f4f4f4;
             color: #333;
+            line-height: 1.4;
+        }
+
+        /* 컨테이너 */
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* 헤더 스타일 */
+        header {
+            display: flex;
+            justify-content: center;  /* 수평 중앙 정렬 */
+            align-items: center;      /* 수직 중앙 정렬 */
+            text-align: center;       /* 텍스트 중앙 정렬 */
             margin-bottom: 20px;
-            text-align: center;
         }
 
-        .search-info {
-            font-size: 1rem;
-            color: #888;
-            margin-bottom: 30px;
-            text-align: center;
+        header h1 {
+            font-family: 'Pretendard', sans-serif;  /* 폰트 변경 */
+            font-size: 1.5rem;  /* 글씨 크기 작게 */
+            margin-bottom: 10px;
+            font-weight: normal;  /* 폰트 두께를 일반으로 변경 */
+            color: #333;
         }
 
+        /* 정렬 옵션 스타일 */
+        .sort-options {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .sort-options a {
+            margin: 0 8px;
+            text-decoration: none;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .sort-options a.active {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        /* 게시글 리스트 스타일 */
         .post-list {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
 
+        .posts {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* 게시글 항목 스타일 */
         .post-item {
             background-color: #ffffff;
             padding: 15px;
@@ -75,36 +107,101 @@
             font-size: 0.85rem;
             color: #999;
         }
+        .post-info {
+            display: flex;
+            align-items: center; /* 세로 중앙 정렬 */
+            gap: 10px; /* 제목과 카테고리 사이 여백 */
+        }
 
-        .no-results {
-            font-size: 1rem;
-            text-align: center;
-            color: #888;
+        .post-info h2 {
+            margin: 0; /* 기본 마진 제거 */
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .post-info .category {
+            font-size: 0.9rem;
+            padding: 2px 6px; /* 안쪽 여백 */
+            border-radius: 4px; /* 둥근 테두리 */
+        }
+        a {
+        text-decoration: none;
+        color: inherit; /* 기본 텍스트 색상 사용 */
+        }
+
+        a:hover {
+            color: inherit; /* hover 시 색상 변경 없음 */
+            text-decoration: none; /* hover 시 밑줄 없애기 */
+        }
+        /* 검색 폼 스타일 */
+        .search-form {
+            display: flex;
+            justify-content: center; /* 가운데 정렬 */
+            margin-bottom: 15px; /* 아래 여백 */
+        }
+
+        .search-form input[type="text"] {
+            width: 300px; /* 검색 창 너비 */
+            padding: 8px; /* 안쪽 여백 */
+            border: 1px solid #ccc; /* 테두리 색상 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            font-size: 0.9rem; /* 폰트 크기 */
+        }
+
+        .search-form button {
+            margin-left: 10px; /* 검색 창과 버튼 간격 */
+            padding: 8px 15px; /* 버튼 여백 */
+            background-color: #007bff; /* 버튼 색상 */
+            color: white; /* 버튼 텍스트 색상 */
+            border: none; /* 테두리 제거 */
+            border-radius: 5px; /* 모서리 둥글게 */
+            font-size: 0.9rem; /* 폰트 크기 */
+            cursor: pointer; /* 마우스 포인터 변경 */
+        }
+
+        .search-form button:hover {
+            background-color: #0056b3; /* 버튼 호버 시 색상 변경 */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>검색 결과</h1>
-        <div class="search-info">
-            <p>검색어: "{{ query }}"</p>
-        </div>
+            <!-- Header -->
+            <header>
+            <h1>
+                커뮤니티
+                <a href="{% url 'accounts:mypage' %}">
+                    <button id="mypage"><img src="{% static 'img/base.html_mypage_active.svg' %}" alt="마이페이지" /></button>
+                </a>
+            </h1>
+        </header>
+            <!-- Search Form -->
+            <div class="search-form">
+                <form method="get" action="{% url 'community:search_posts' %}">
+                    <input type="text" name="q" placeholder="검색어를 입력하세요" value="{{ query }}" />                        <button type="submit">검색</button>
+                    </form>
+            </div>
 
         {% if posts %}
             <ul class="post-list">
                 {% for post in posts %}
-                    <li class="post-item">
-                        <div class="post-info">
-                            <h2><a href="{% url 'community:post_detail' post.id %}">{{ post.title }}</a></h2>
-                            <p class="category">{{ post.category.name }}</p>
-                        </div>
-                        <p class="post-date">{{ post.created_at|date:"Y-m-d H:i" }}</p>
-                    </li>
+                <li class="post-item">
+                    <div class="post-info">
+                        <h2>
+                            <a href="{% url 'community:post_detail' post.id %}">{{ post.title }}</a>
+                        </h2>
+                        <p class="category">{{ post.category.name }}</p>
+                    </div>
+                    <p class="post-date">{{ post.created_at|date:"Y-m-d H:i" }}</p>
+                </li>                
                 {% endfor %}
             </ul>
         {% else %}
             <p class="no-results">검색 결과가 없습니다.</p>
         {% endif %}
+
+        <!-- 뒤로 가기 버튼 -->
+        <a href="{% url 'community:community' 0 1 %}" class="back-button">커뮤니티로 돌아가기</a>
     </div>
 </body>
 </html>

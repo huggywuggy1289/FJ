@@ -99,7 +99,7 @@
     <form method="post">
       {% csrf_token %} {{ form.as_p }}
       <button type="submit">저장</button>
+      <a href="{% url 'community:post_detail' post.id %}" class="back-button">&#8592;</a>
     </form>
-    <a href="{% url 'community:post_detail' post.id %}">취소</a>
   </body>
 </html>
