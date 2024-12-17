@@ -226,7 +226,7 @@
         </form>
         {% for comment in comments %}
         <div class="comment">
-            <b>{{ comment.author.nickname }} :</b> {{ comment.content }}
+            <b>{{ comment.author.username }} :</b> {{ comment.content }}
             {% if request.user == comment.author %}
             <form action="{% url 'community:delete_comment' comment.id %}" method="POST" class="comment-delete-form">
                 {% csrf_token %}
